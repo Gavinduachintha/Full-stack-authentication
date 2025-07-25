@@ -16,11 +16,35 @@ const Signup = () => {
         email,
         password,
       });
-      localStorage.setItem("token",res.data.token)
-    } catch (error) {}
+      localStorage.setItem("token", res.data.token);
+      navigate("/dashboard");
+    } catch (error) {
+      alert(error.response?.data?.message || "Login failed");
+    }
   };
 
-  return <></>;
+  return (
+    <>
+      <form onSubmit={handlSubmit}>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit">Signup</button>
+      </form>
+    </>
+  );
 };
 
 export default Signup;

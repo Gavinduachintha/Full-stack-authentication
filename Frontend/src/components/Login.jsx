@@ -20,7 +20,7 @@ const Login = () => {
       
       
     } catch (error) {
-      alert(error.response?.data?.message || "Login failes");
+      alert(error.response?.data?.message || "Login failed");
     }
   };
 
