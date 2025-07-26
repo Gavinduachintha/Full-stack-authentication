@@ -9,17 +9,23 @@ const Signup = () => {
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
-    e.prevenDefault();
+    e.preventDefault();
     try {
+      if (!name || !email || !password) {
+        alert("All fields required");
+      }
       const res = await axios.post("http://localhost:3000/register", {
         name,
         email,
         password,
       });
+    
       localStorage.setItem("token", res.data.token);
+      console.log("Token", res.data.token);
+
       navigate("/dashboard");
     } catch (error) {
-      alert(error.response?.data?.message || "Login failed");
+      alert(error.response?.data?.message || "Signup failed");
     }
   };
 
@@ -32,7 +38,10 @@ const Signup = () => {
         <h2 className="text-2xl font-bold text-center text-gray-800">Signup</h2>
 
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="name"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Name
           </label>
           <input
@@ -46,7 +55,10 @@ const Signup = () => {
         </div>
 
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Email
           </label>
           <input
@@ -60,7 +72,10 @@ const Signup = () => {
         </div>
 
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="password"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Password
           </label>
           <input

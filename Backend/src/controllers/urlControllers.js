@@ -22,8 +22,11 @@ export const register = async(req,res)=>{
     }
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password,saltRounds)
-    const newUser = await db.query("INSERT INTO users(name,email,password) VALUES($1,$2,$3)",[name,email,hashedPassword])
-    res.status(201).json({message:"User created", user:newUser})
+    const newUser = await db.query("INSERT INTO users(name,email,password) VALUES($1,$2,$3) RETURNING id,name,email",[name,email,hashedPassword])
+    const user = newUser.rows[0]
+    const token = JWT.sign({id:user.id},JWT_Secret,{expiresIn:"1h"})
+    res.status(201).json({message:"User created", user:user,token})
+    
   } catch (error) {
     res.status(500).json({error:error.message})
   }
