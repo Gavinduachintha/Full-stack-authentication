@@ -18,7 +18,7 @@ export const register = async(req,res)=>{
   try {
     const isRegistered = await db.query("SELECT * FROM users WHERE email = ($1)",[email])
     if(isRegistered.rows.length>0){
-      res.status(409).json({message: "already registed, pls login"})
+     return res.status(409).json({message: "already registed, pls login"})
     }
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password,saltRounds)
